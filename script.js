@@ -90,24 +90,18 @@ if (!SpeechRecognition) {
     const text = event.results[0][0].transcript;
     questionBox.innerText = "Klient: " + text;
 
-    let answer = "Přesnou informaci prosím ověřte na www.studiokali.cz.";
-    const q = text.toLowerCase();
+   answerBox.innerText = "Jirka AI přemýšlí...";
 
-    if (q.includes("cena") || q.includes("kolik")) {
-      answer = "Ceny najdete na www.studiokali.cz.";
-    }
+const res = await fetch("/api/chat", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ message: text })
+});
 
-    if (q.includes("adresa") || q.includes("kde")) {
-      answer = "Studio Kali najdete na adrese Bělehradská 994/68, Praha 2.";
-    }
-
-    if (q.includes("objednat") || q.includes("rezervace")) {
-      answer = "Objednat se můžete přímo na www.studiokali.cz.";
-    }
-
-    if (q.includes("melír") || q.includes("balayage") || q.includes("barvení")) {
-      answer = "Ve Studiu Kali se specializujeme na barvení, melír, balayage a blond služby.";
-    }
+const data = await res.json();
+const answer = data.answer || "Omlouvám se, nerozuměl jsem.";
 
     answerBox.innerText = "Jirka AI: " + answer;
 

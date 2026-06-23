@@ -31,20 +31,24 @@ function init3D() {
   const loader = new GLTFLoader();
 
   loader.load(
-    MODEL_URL,
-    (gltf) => {
-      avatar = gltf.scene;
-      avatar.scale.set(4, 4, 4;
-      avatar.position.set(0, -3, 0);
-      scene.add(avatar);
-      answerBox.innerText = "Jirka AI je připraven.";
-    },
-    undefined,
-    (error) => {
-      console.error("GLB ERROR:", error);
-      answerBox.innerText = "3D avatar se nepodařilo načíst.";
-    }
-  );
+  MODEL_URL,
+  (gltf) => {
+    avatar = gltf.scene;
+
+    avatar.scale.set(4, 4, 4);
+    avatar.position.set(0, -3, 0);
+    avatar.rotation.y = Math.PI;
+
+    scene.add(avatar);
+
+    answerBox.innerText = "Jirka AI je připraven.";
+  },
+  undefined,
+  (error) => {
+    console.error("GLB ERROR:", error);
+    answerBox.innerText = "3D avatar se nepodařilo načíst.";
+  }
+);
 
   animate();
 }

@@ -10,13 +10,17 @@ const answerBox = document.getElementById("kali-answer");
 
 let scene, camera, renderer, avatar;
 let mouthMesh = null;
-let audioAnalyser = null;
-let audioData = null;
+let mouthIndex = null;
 
 function init3D() {
   scene = new THREE.Scene();
 
-  camera = new THREE.PerspectiveCamera(35, avatarBox.clientWidth / avatarBox.clientHeight, 0.1, 100);
+  camera = new THREE.PerspectiveCamera(
+    35,
+    avatarBox.clientWidth / avatarBox.clientHeight,
+    0.1,
+    100
+  );
   camera.position.set(0, 1.6, 6);
 
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -24,8 +28,7 @@ function init3D() {
   renderer.setPixelRatio(window.devicePixelRatio);
   avatarBox.appendChild(renderer.domElement);
 
-  const hemi = new THREE.HemisphereLight(0xffffff, 0x222222, 2);
-  scene.add(hemi);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x222222, 2));
 
   const dir = new THREE.DirectionalLight(0xffffff, 2);
   dir.position.set(0, 2, 4);
@@ -34,53 +37,40 @@ function init3D() {
   const loader = new GLTFLoader();
 
   loader.load(
-  MODEL_URL,
-  (gltf) => {
-    avatar = gltf.scene;
+    MODEL_URL,
+    (gltf) => {
+      avatar = gltf.scene;
 
-    avatar.scale.set(0.04, 0.04, 0.04);
-    avatar.position.set(0, -0.50, 0);
-    avatar.rotation.y = 0;
+      avatar.scale.set(0.04, 0.04, 0.04);
+      avatar.position.set(0, -0.5, 0);
+      avatar.rotation.y = 0;
 
-    scene.add(avatar);
-    avatar.traverse((obj) => {
+      scene.add(avatar);
 
-  if (obj.isMesh) {
-    console.log("MESH:", obj.name);
+      avatar.traverse((obj) => {
+        if (obj.isMesh && obj.morphTargetDictionary) {
+          console.log("MORPHS:", obj.name, obj.morphTargetDictionary);
 
-    if (obj.morphTargetDictionary) {
+          if (obj.morphTargetDictionary.jawOpen !== undefined) {
+            mouthMesh = obj;
+            mouthIndex = obj.morphTargetDictionary.jawOpen;
 
-      console.log(
-        "MORPHS:",
-        obj.name,
-        obj.morphTargetDictionary
-      );
+            window.mouthMesh = mouthMesh;
+            window.mouthIndex = mouthIndex;
 
-      if (
-        obj.morphTargetDictionary.jawOpen !== undefined ||
-        obj.morphTargetDictionary.mouthOpen !== undefined
-      ) {
-        mouthMesh = obj;
-        console.log("MOUTH FOUND:", obj.name);
-        window.mouthMesh = obj;
-window.mouthIndex = obj.morphTargetDictionary.jawOpenMouthLeft ?? 0;
-      }
+            console.log("MOUTH FOUND:", obj.name, mouthIndex);
+          }
+        }
+      });
+
+      answerBox.innerText = "Jirka AI je připraven.";
+    },
+    undefined,
+    (error) => {
+      console.error("GLB ERROR:", error);
+      answerBox.innerText = "3D avatar se nepodařilo načíst.";
     }
-  }
-
-});
-
-window.avatarTest = avatar;
-console.log("AVATAR LOADED", avatar);
-
-answerBox.innerText = "Jirka AI je připraven.";
-  },
-  undefined,
-  (error) => {
-    console.error("GLB ERROR:", error);
-    answerBox.innerText = "3D avatar se nepodařilo načíst.";
-  }
-);
+  );
 
   animate();
 }
@@ -93,6 +83,19 @@ function animate() {
   }
 
   renderer.render(scene, camera);
+}
+
+function startMouthAnimation(audio) {
+  if (!mouthMesh || mouthIndex === null) return;
+
+  const mouthAnim = setInterval(() => {
+    mouthMesh.morphTargetInfluences[mouthIndex] = Math.random() * 0.75;
+  }, 90);
+
+  audio.onended = () => {
+    clearInterval(mouthAnim);
+    mouthMesh.morphTargetInfluences[mouthIndex] = 0;
+  };
 }
 
 init3D();
@@ -116,51 +119,39 @@ if (!SpeechRecognition) {
     const text = event.results[0][0].transcript;
     questionBox.innerText = "Klient: " + text;
 
-   answerBox.innerText = "Jirka AI přemýšlí...";
+    answerBox.innerText = "Jirka AI přemýšlí...";
 
-const res = await fetch("/api/chat", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({ message: text })
-});
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message: text })
+    });
 
-const data = await res.json();
-const answer = data.answer || "Omlouvám se, nerozuměl jsem.";
+    const data = await res.json();
+    const answer = data.answer || "Omlouvám se, nerozuměl jsem.";
 
     answerBox.innerText = "Jirka AI: " + answer;
 
     try {
-  const ttsRes = await fetch("/api/tts", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ text: answer })
-  });
+      const ttsRes = await fetch("/api/tts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ text: answer })
+      });
 
-  const audioBlob = await ttsRes.blob();
-  const audioUrl = URL.createObjectURL(audioBlob);
-  const audio = new Audio(audioUrl);
-  audio.play();
-      const mouthAnim = setInterval(() => {
-  if (window.mouthMesh && window.mouthMesh.morphTargetInfluences) {
-    window.mouthMesh.morphTargetInfluences[window.mouthIndex] =
-      Math.random() * 0.8;
-  }
-}, 100);
+      const audioBlob = await ttsRes.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
 
-audio.onended = () => {
-  clearInterval(mouthAnim);
+      startMouthAnimation(audio);
+      audio.play();
 
-  if (window.mouthMesh && window.mouthMesh.morphTargetInfluences) {
-    window.mouthMesh.morphTargetInfluences[window.mouthIndex] = 0;
-  }
-};
-
-} catch (e) {
-  console.error("TTS ERROR:", e);
-}
+    } catch (e) {
+      console.error("TTS ERROR:", e);
+    }
   };
 }

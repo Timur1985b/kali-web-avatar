@@ -36,7 +36,7 @@ function init3D() {
     avatar = gltf.scene;
 
     avatar.scale.set(0.03, 0.03, 0.03);
-    avatar.position.set(0, -0.40, 0);
+    avatar.position.set(0, -0.50, 0);
     avatar.rotation.y = 0;
 
     scene.add(avatar);

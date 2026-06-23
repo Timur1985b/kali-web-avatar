@@ -1,109 +1,37 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jirka AI</title>
-
-<style>
-body{
-margin:0;
-background:#0a0805;
-color:white;
-font-family:Arial,sans-serif;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-}
-
-.card{
-width:350px;
-background:#141210;
-padding:25px;
-border-radius:15px;
-text-align:center;
-border:1px solid #c9a96e;
-}
-
-h1{
-color:#c9a96e;
-}
-
-button{
-background:#c9a96e;
-border:none;
-padding:15px;
-border-radius:10px;
-cursor:pointer;
-width:100%;
-font-size:18px;
-margin-top:15px;
-}
-
-#result{
-margin-top:20px;
-font-size:18px;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio Kali AI Avatar</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="card">
-<h1>👨‍💼 Jirka AI</h1>
+<div id="kali-ai-widget">
+  <div class="kali-avatar">👨‍💼</div>
 
-<p>Stiskněte tlačítko a položte otázku.</p>
+  <div class="kali-header">
+    Jirka AI
+  </div>
 
-<button id="startBtn">
-🎙️ Zeptat se hlasem
-</button>
+  <p id="kali-question">
+    Stiskněte tlačítko a zeptejte se hlasem.
+  </p>
 
-<div id="result">
-Čekám...
+  <p id="kali-answer">
+    Jsem virtuální asistent Studio Kali.
+  </p>
+
+  <button id="talkBtn">
+    🎙️ Zeptat se hlasem
+  </button>
+
+  <button class="secondary" onclick="window.open('https://www.studiokali.cz', '_blank')">
+    Objednat se
+  </button>
 </div>
-</div>
 
-<script>
-
-const SpeechRecognition =
-window.SpeechRecognition ||
-window.webkitSpeechRecognition;
-
-const recognition = new SpeechRecognition();
-
-recognition.lang = "cs-CZ";
-recognition.interimResults = false;
-
-const result = document.getElementById("result");
-
-document.getElementById("startBtn").onclick = () => {
-
-recognition.start();
-
-result.innerHTML = "🎤 Poslouchám...";
-};
-
-recognition.onresult = (event) => {
-
-const text = event.results[0][0].transcript;
-
-result.innerHTML =
-"Vy jste řekl:<br><br>" + text;
-
-const answer =
-"Rozumím. Děkuji za váš dotaz.";
-
-const speech =
-new SpeechSynthesisUtterance(answer);
-
-speech.lang = "cs-CZ";
-
-speechSynthesis.speak(speech);
-
-};
-
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>

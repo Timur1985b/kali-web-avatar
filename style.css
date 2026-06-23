@@ -1,0 +1,64 @@
+body {
+  margin: 0;
+  background: #0a0805;
+  font-family: Georgia, serif;
+}
+
+#kali-ai-widget {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 360px;
+  max-width: calc(100vw - 40px);
+  background: #141210;
+  color: white;
+  border: 1px solid #c9a96e;
+  border-radius: 18px;
+  padding: 18px;
+  z-index: 9999;
+  box-shadow: 0 0 35px rgba(201,169,110,.35);
+}
+
+.kali-header {
+  text-align: center;
+  color: #c9a96e;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.kali-avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  margin: 0 auto 12px;
+  background: radial-gradient(circle, #c9a96e, #0a0805);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 55px;
+}
+
+#kali-answer, #kali-question {
+  font-size: 15px;
+  line-height: 1.4;
+  margin: 10px 0;
+  color: #f0ebe3;
+}
+
+button {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 13px;
+  margin-top: 10px;
+  background: #c9a96e;
+  color: #0a0805;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.secondary {
+  background: transparent;
+  border: 1px solid #c9a96e;
+  color: #c9a96e;
+}

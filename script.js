@@ -95,8 +95,8 @@ const mouthAnim = setInterval(() => {
   t += 0.25;
 
   const value =
-    0.25 +
-    Math.abs(Math.sin(t)) * 0.45;
+    0.5 +
+    Math.abs(Math.sin(t)) * 0.18;
 
   mouthMesh.morphTargetInfluences[mouthIndex] = value;
 

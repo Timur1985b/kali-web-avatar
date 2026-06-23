@@ -126,6 +126,7 @@ if (!SpeechRecognition) {
   };
 
   recognition.onresult = async (event) => {
+    alert(event.results[0][0].transcript);
     const text = event.results[0][0].transcript;
     questionBox.innerText = "Klient: " + text;
 

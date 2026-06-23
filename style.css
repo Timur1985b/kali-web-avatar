@@ -81,3 +81,32 @@ button {
   height: 100% !important;
   display: block;
 }
+@media (max-width: 768px) {
+
+  #kali-ai-widget {
+    width: 180px;
+    padding: 8px;
+    right: 10px;
+    bottom: 10px;
+  }
+
+  #avatar3d {
+    height: 90px;
+  }
+
+  .kali-header {
+    font-size: 14px;
+  }
+
+  #talkBtn,
+  .secondary {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  #kali-question,
+  #kali-answer {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+}

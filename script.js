@@ -156,7 +156,6 @@ if (!SpeechRecognition) {
     answerBox.innerText = "Jirka AI: " + answer;
 
     try {
-      alert("TTS START");
       const ttsRes = await fetch("/api/tts", {
         method: "POST",
         headers: {

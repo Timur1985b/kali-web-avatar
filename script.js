@@ -62,6 +62,8 @@ function init3D() {
       ) {
         mouthMesh = obj;
         console.log("MOUTH FOUND:", obj.name);
+        window.mouthMesh = obj;
+window.mouthIndex = obj.morphTargetDictionary.jawOpenMouthLeft ?? 0;
       }
     }
   }

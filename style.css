@@ -5,6 +5,9 @@ body {
 }
 
 #kali-ai-widget {
+  box-sizing: border-box;
+  padding: 8px;
+  overflow: hidden;
   position: fixed;
   right: 20px;
   bottom: 20px;

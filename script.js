@@ -151,13 +151,6 @@ if (!SpeechRecognition) {
     const answer = data.answer || "Omlouvám se, nerozuměl jsem.";
 
     answerBox.innerText = "Jirka AI: " + answer;
-    try {
-  const silentAudio = new Audio(
-    "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQQAAAAAAA=="
-  );
-  silentAudio.playsInline = true;
-  await silentAudio.play().catch(() => {});
-} catch (e) {}
 
     try {
       const ttsRes = await fetch("/api/tts", {

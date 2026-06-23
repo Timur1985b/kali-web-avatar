@@ -37,7 +37,7 @@ function init3D() {
 
     avatar.scale.set(0.03, 0.03, 0.03);
     avatar.position.set(0, -0.8, 0);
-    avatar.rotation.y = Math.PI;
+    avatar.rotation.y = 0;
 
     scene.add(avatar);
     avatar.traverse((obj) => {
@@ -63,7 +63,7 @@ function animate() {
   requestAnimationFrame(animate);
 
   if (avatar) {
-    avatar.rotation.y = Math.PI + Math.sin(Date.now() * 0.001) * 0.08;
+    avatar.rotation.y = Math.sin(Date.now() * 0.001) * 0.08;
   }
 
   renderer.render(scene, camera);

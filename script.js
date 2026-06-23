@@ -166,7 +166,6 @@ if (!SpeechRecognition) {
       });
 
       const audioBlob = await ttsRes.blob();
-      alert("Audio size: " + audioBlob.size);
       const audioUrl = URL.createObjectURL(audioBlob);
      const audio = new Audio(audioUrl);
 
@@ -177,6 +176,22 @@ startMouthAnimation(audio);
 
 await audio.play().catch(err => {
   console.error("AUDIO PLAY ERROR:", err);
+
+  const playBtn = document.createElement("button");
+  playBtn.innerText = "🔊 Přehrát odpověď";
+  playBtn.style.marginTop = "8px";
+  playBtn.style.padding = "10px";
+  playBtn.style.borderRadius = "12px";
+  playBtn.style.background = "#c9a96e";
+  playBtn.style.border = "none";
+  playBtn.style.fontWeight = "bold";
+
+  playBtn.onclick = () => {
+    audio.play();
+  };
+
+  answerBox.appendChild(document.createElement("br"));
+  answerBox.appendChild(playBtn);
 });
 
     } catch (e) {

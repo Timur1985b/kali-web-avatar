@@ -119,11 +119,19 @@ if (!SpeechRecognition) {
   recognition.lang = "cs-CZ";
   recognition.interimResults = false;
 
-  btn.onclick = () => {
-    recognition.start();
-    questionBox.innerText = "🎤 Poslouchám...";
-    answerBox.innerText = "";
-  };
+  btn.onclick = async () => {
+
+  try {
+    const unlock = new Audio();
+    unlock.src =
+      "data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAA";
+    await unlock.play().catch(() => {});
+  } catch (e) {}
+
+  recognition.start();
+  questionBox.innerText = "🎤 Poslouchám...";
+  answerBox.innerText = "";
+};
 
   recognition.onresult = async (event) => {
     const text = event.results[0][0].transcript;
@@ -155,10 +163,16 @@ if (!SpeechRecognition) {
 
       const audioBlob = await ttsRes.blob();
       const audioUrl = URL.createObjectURL(audioBlob);
-      const audio = new Audio(audioUrl);
+     const audio = new Audio(audioUrl);
 
-      startMouthAnimation(audio);
-      audio.play();
+audio.playsInline = true;
+audio.autoplay = true;
+
+startMouthAnimation(audio);
+
+await audio.play().catch(err => {
+  console.error("AUDIO PLAY ERROR:", err);
+});
 
     } catch (e) {
       console.error("TTS ERROR:", e);

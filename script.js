@@ -105,9 +105,22 @@ const answer = data.answer || "Omlouvám se, nerozuměl jsem.";
 
     answerBox.innerText = "Jirka AI: " + answer;
 
-    const voice = new SpeechSynthesisUtterance(answer);
-    voice.lang = "cs-CZ";
-    voice.rate = 0.95;
-    speechSynthesis.speak(voice);
+    try {
+  const ttsRes = await fetch("/api/tts", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ text: answer })
+  });
+
+  const audioBlob = await ttsRes.blob();
+  const audioUrl = URL.createObjectURL(audioBlob);
+  const audio = new Audio(audioUrl);
+  audio.play();
+
+} catch (e) {
+  console.error("TTS ERROR:", e);
+}
   };
 }

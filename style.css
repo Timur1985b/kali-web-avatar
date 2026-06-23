@@ -11,7 +11,8 @@ body {
   width: 220px;
   min-height: auto;
   max-width: calc(100vw - 40px);
-  background: #141210;
+  background: transparent;
+  backdrop-filter: blur(8px);
   color: white;
   border: 1px solid #c9a96e;
   border-radius: 18px;

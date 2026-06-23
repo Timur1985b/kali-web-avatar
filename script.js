@@ -41,7 +41,10 @@ function init3D() {
 
     scene.add(avatar);
 
-    answerBox.innerText = "Jirka AI je připraven.";
+window.avatarTest = avatar;
+console.log("AVATAR LOADED", avatar);
+
+answerBox.innerText = "Jirka AI je připraven.";
   },
   undefined,
   (error) => {

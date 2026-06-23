@@ -1,7 +1,7 @@
 import * as THREE from "https://esm.sh/three@0.160.0";
 import { GLTFLoader } from "https://esm.sh/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
 
-const MODEL_URL = "https://drive.google.com/uc?export=download&id=1uVoTvmGgTXifaQQCoWjAYujR_zaTpXwQ";
+const MODEL_URL = "https://auas2uhkirnelrty.public.blob.vercel-storage.com/jirka_rigged.glb";
 
 const avatarBox = document.getElementById("avatar3d");
 const btn = document.getElementById("talkBtn");

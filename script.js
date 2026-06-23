@@ -120,17 +120,20 @@ if (!SpeechRecognition) {
   recognition.interimResults = false;
 
   btn.onclick = async () => {
-
   try {
-    const unlock = new Audio();
-    unlock.src =
-      "data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAA";
-    await unlock.play().catch(() => {});
+    recognition.stop();
   } catch (e) {}
 
-  recognition.start();
-  questionBox.innerText = "🎤 Poslouchám...";
-  answerBox.innerText = "";
+  setTimeout(() => {
+    try {
+      recognition.start();
+      questionBox.innerText = "🎤 Poslouchám...";
+      answerBox.innerText = "";
+    } catch (e) {
+      console.error("MIC ERROR:", e);
+      answerBox.innerText = "Mikrofon se nepodařilo spustit.";
+    }
+  }, 300);
 };
 
   recognition.onresult = async (event) => {

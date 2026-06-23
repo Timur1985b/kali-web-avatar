@@ -14,7 +14,7 @@ function init3D() {
   scene = new THREE.Scene();
 
   camera = new THREE.PerspectiveCamera(35, avatarBox.clientWidth / avatarBox.clientHeight, 0.1, 100);
-  camera.position.set(0, 1.4, 4);
+  camera.position.set(0, 1.5, 2);
 
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(avatarBox.clientWidth, avatarBox.clientHeight);
@@ -34,8 +34,8 @@ function init3D() {
     MODEL_URL,
     (gltf) => {
       avatar = gltf.scene;
-      avatar.scale.set(1.5, 1.5, 1.5);
-      avatar.position.set(0, -1.4, 0);
+      avatar.scale.set(4, 4, 4;
+      avatar.position.set(0, -3, 0);
       scene.add(avatar);
       answerBox.innerText = "Jirka AI je připraven.";
     },

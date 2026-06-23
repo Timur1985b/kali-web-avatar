@@ -57,7 +57,7 @@ function animate() {
   requestAnimationFrame(animate);
 
   if (avatar) {
-    avatar.rotation.y = Math.sin(Date.now() * 0.001) * 0.08;
+    avatar.rotation.y = Math.PI + Math.sin(Date.now() * 0.001) * 0.08;
   }
 
   renderer.render(scene, camera);

@@ -14,7 +14,7 @@ function init3D() {
   scene = new THREE.Scene();
 
   camera = new THREE.PerspectiveCamera(35, avatarBox.clientWidth / avatarBox.clientHeight, 0.1, 100);
-  camera.position.set(0, 1, 8);
+  camera.position.set(0, 1, 5);
 
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(avatarBox.clientWidth, avatarBox.clientHeight);
@@ -35,11 +35,14 @@ function init3D() {
   (gltf) => {
     avatar = gltf.scene;
 
-    avatar.scale.set(1, 1, 1);
+    avatar.scale.set(0.01, 0.01, 0.01);
     avatar.position.set(0, 0, 0);
     avatar.rotation.y = Math.PI;
 
     scene.add(avatar);
+    avatar.traverse((obj) => {
+  if (obj.isMesh) console.log("MESH:", obj.name);
+});
 
 window.avatarTest = avatar;
 console.log("AVATAR LOADED", avatar);

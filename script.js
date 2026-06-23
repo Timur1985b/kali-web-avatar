@@ -14,7 +14,7 @@ function init3D() {
   scene = new THREE.Scene();
 
   camera = new THREE.PerspectiveCamera(35, avatarBox.clientWidth / avatarBox.clientHeight, 0.1, 100);
-  camera.position.set(0, 1, 5);
+  camera.position.set(0, 1.6, 6);
 
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(avatarBox.clientWidth, avatarBox.clientHeight);
@@ -35,8 +35,8 @@ function init3D() {
   (gltf) => {
     avatar = gltf.scene;
 
-    avatar.scale.set(0.01, 0.01, 0.01);
-    avatar.position.set(0, 0, 0);
+    avatar.scale.set(0.005, 0.005, 0.005);
+    avatar.position.set(0, -1.2, 0);
     avatar.rotation.y = Math.PI;
 
     scene.add(avatar);

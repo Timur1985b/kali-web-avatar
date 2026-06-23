@@ -1,7 +1,7 @@
 body {
   margin: 0;
-  background: #0a0805;
-  font-family: Georgia, serif;
+  padding: 0;
+  background: transparent;
 }
 
 #kali-ai-widget {

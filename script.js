@@ -165,6 +165,7 @@ if (!SpeechRecognition) {
       });
 
       const audioBlob = await ttsRes.blob();
+      alert("Audio size: " + audioBlob.size);
       const audioUrl = URL.createObjectURL(audioBlob);
      const audio = new Audio(audioUrl);
 

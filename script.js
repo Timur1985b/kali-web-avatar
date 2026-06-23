@@ -142,6 +142,20 @@ const answer = data.answer || "Omlouvám se, nerozuměl jsem.";
   const audioUrl = URL.createObjectURL(audioBlob);
   const audio = new Audio(audioUrl);
   audio.play();
+      const mouthAnim = setInterval(() => {
+  if (window.mouthMesh && window.mouthMesh.morphTargetInfluences) {
+    window.mouthMesh.morphTargetInfluences[window.mouthIndex] =
+      Math.random() * 0.8;
+  }
+}, 100);
+
+audio.onended = () => {
+  clearInterval(mouthAnim);
+
+  if (window.mouthMesh && window.mouthMesh.morphTargetInfluences) {
+    window.mouthMesh.morphTargetInfluences[window.mouthIndex] = 0;
+  }
+};
 
 } catch (e) {
   console.error("TTS ERROR:", e);

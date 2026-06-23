@@ -9,6 +9,9 @@ const questionBox = document.getElementById("kali-question");
 const answerBox = document.getElementById("kali-answer");
 
 let scene, camera, renderer, avatar;
+let mouthMesh = null;
+let audioAnalyser = null;
+let audioData = null;
 
 function init3D() {
   scene = new THREE.Scene();
@@ -35,13 +38,34 @@ function init3D() {
   (gltf) => {
     avatar = gltf.scene;
 
-    avatar.scale.set(0.05, 0.05, 0.05);
+    avatar.scale.set(0.04, 0.04, 0.04);
     avatar.position.set(0, -0.50, 0);
     avatar.rotation.y = 0;
 
     scene.add(avatar);
     avatar.traverse((obj) => {
-  if (obj.isMesh) console.log("MESH:", obj.name);
+
+  if (obj.isMesh) {
+    console.log("MESH:", obj.name);
+
+    if (obj.morphTargetDictionary) {
+
+      console.log(
+        "MORPHS:",
+        obj.name,
+        obj.morphTargetDictionary
+      );
+
+      if (
+        obj.morphTargetDictionary.jawOpen !== undefined ||
+        obj.morphTargetDictionary.mouthOpen !== undefined
+      ) {
+        mouthMesh = obj;
+        console.log("MOUTH FOUND:", obj.name);
+      }
+    }
+  }
+
 });
 
 window.avatarTest = avatar;

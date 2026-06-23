@@ -88,9 +88,19 @@ function animate() {
 function startMouthAnimation(audio) {
   if (!mouthMesh || mouthIndex === null) return;
 
-  const mouthAnim = setInterval(() => {
-    mouthMesh.morphTargetInfluences[mouthIndex] = Math.random() * 0.75;
-  }, 90);
+  let t = 0;
+
+const mouthAnim = setInterval(() => {
+
+  t += 0.25;
+
+  const value =
+    0.25 +
+    Math.abs(Math.sin(t)) * 0.45;
+
+  mouthMesh.morphTargetInfluences[mouthIndex] = value;
+
+}, 60);
 
   audio.onended = () => {
     clearInterval(mouthAnim);
